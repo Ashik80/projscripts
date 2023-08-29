@@ -14,7 +14,7 @@ create_window() {
 
 # @param 'fe', 'be', ''
 attach_to_session() {
-    if [[ -z $1 ]] then
+    if [[ -z $1 ]]; then
         tmux a -t platform
     else
         tmux a -t platform:$1
@@ -41,14 +41,14 @@ activate_virtualenv() {
 create_new_session_or_new_window_on_existing_session() {
     local session_exists=$(if_session_exists)
 
-    if [[ $session_exists != 0 ]] then
+    if [[ $session_exists != 0 ]]; then
         create_session $1
     fi
 
-    if [[ -n $1 ]] then
+    if [[ -n $1 ]]; then
         local window_exists=$(if_window_exists $1)
 
-        if [[ $window_exists != 0 ]] then
+        if [[ $window_exists != 0 ]]; then
             create_window $1
         fi
     fi
@@ -56,16 +56,16 @@ create_new_session_or_new_window_on_existing_session() {
 
 # @param 'fe', 'be', ''
 tplatform() {
-    if [[ -z $1 ]] then
+    if [[ -z $1 ]]; then
         create_new_session_or_new_window_on_existing_session be
         activate_virtualenv
         create_new_session_or_new_window_on_existing_session fe
         attach_to_session be
-    elif [[ $1 == "be" ]] then
+    elif [[ $1 == "be" ]]; then
         create_new_session_or_new_window_on_existing_session $1
         activate_virtualenv
         attach_to_session $1
-    elif [[ $1 == "fe" ]] then
+    elif [[ $1 == "fe" ]]; then
         create_new_session_or_new_window_on_existing_session $1
         attach_to_session $1
     else
