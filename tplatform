@@ -1,0 +1,77 @@
+#!/usr/bin/env bash
+
+# @param 'fe', 'be'
+create_session() {
+    tmux new -d -s platform -c $HOME/src/ManzilApp/platform-$1
+    tmux rename-window -t platform:0 $1
+}
+
+# @param 'fe', 'be'
+create_window() {
+    tmux new-window -t platform -c $HOME/src/ManzilApp/platform-$1
+    tmux rename-window -t platform:1 $1
+}
+
+# @param 'fe', 'be', ''
+attach_to_session() {
+    if [[ -z $1 ]] then
+        tmux a -t platform
+    else
+        tmux a -t platform:$1
+    fi
+}
+
+if_session_exists() {
+    tmux has-session -t platform 2>/dev/null
+    echo $?
+}
+
+# @param 'fe', 'be'
+if_window_exists() {
+    tmux has-session -t platform:$1 2>/dev/null
+    echo $?
+}
+
+activate_virtualenv() {
+    tmux send-keys -t platform:be "pyenv activate platform-be" C-m
+    tmux send-keys -t platform:be "clear" C-m
+}
+
+# @param 'fe', 'be'
+create_new_session_or_new_window_on_existing_session() {
+    local session_exists=$(if_session_exists)
+
+    if [[ $session_exists != 0 ]] then
+        create_session $1
+    fi
+
+    if [[ -n $1 ]] then
+        local window_exists=$(if_window_exists $1)
+
+        if [[ $window_exists != 0 ]] then
+            create_window $1
+        fi
+    fi
+}
+
+# @param 'fe', 'be', ''
+tplatform() {
+    if [[ -z $1 ]] then
+        create_new_session_or_new_window_on_existing_session be
+        activate_virtualenv
+        create_new_session_or_new_window_on_existing_session fe
+        attach_to_session be
+    elif [[ $1 == "be" ]] then
+        create_new_session_or_new_window_on_existing_session $1
+        activate_virtualenv
+        attach_to_session $1
+    elif [[ $1 == "fe" ]] then
+        create_new_session_or_new_window_on_existing_session $1
+        attach_to_session $1
+    else
+        echo "ERROR: Wrong parameter"
+        exit 1
+    fi
+}
+
+tplatform $1
