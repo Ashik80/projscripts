@@ -1,18 +1,22 @@
 #!/usr/bin/env bash
 
-# @param 'fe', 'be'
-create_session() {
-    tmux new -d -s platform -c $HOME/src/ManzilApp/platform-$1
-    tmux rename-window -t platform:0 $1
+. utils
+
+# param 1 : 'repo suffix'
+# Ex: fe, be
+create_platform_session() {
+    create_session platform $1
 }
 
-# @param 'fe', 'be'
+# param 1 : 'repo suffix'
+# Ex: fe, be
 create_window() {
     tmux new-window -t platform -c $HOME/src/ManzilApp/platform-$1
     tmux rename-window -t platform:1 $1
 }
 
-# @param 'fe', 'be', ''
+# param 1 (optional) : 'repo suffix'
+# Ex: fe, be
 attach_to_session() {
     if [[ -z $1 ]]; then
         tmux a -t platform
@@ -21,12 +25,8 @@ attach_to_session() {
     fi
 }
 
-if_session_exists() {
-    tmux has-session -t platform 2>/dev/null
-    echo $?
-}
-
-# @param 'fe', 'be'
+# param 1 : 'repo suffix'
+# Ex: fe, be
 if_window_exists() {
     tmux has-session -t platform:$1 2>/dev/null
     echo $?
@@ -39,10 +39,10 @@ activate_virtualenv() {
 
 # @param 'fe', 'be'
 create_new_session_or_new_window_on_existing_session() {
-    local session_exists=$(if_session_exists)
+    local session_exists=$(if_session_exists platform)
 
     if [[ $session_exists != 0 ]]; then
-        create_session $1
+        create_platform_session $1
     fi
 
     if [[ -n $1 ]]; then

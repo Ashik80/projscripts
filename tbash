@@ -1,0 +1,27 @@
+#!/usr/bin/env bash
+
+# @param 'name'
+create_session() {
+    tmux new -d -s bash -c $HOME
+}
+
+attach_to_session() {
+    tmux a -t bash
+}
+
+if_session_exists() {
+    tmux has-session -t bash 2>/dev/null
+    echo $?
+}
+
+create_or_attach_bash_session() {
+    local session_exists=$(if_session_exists)
+
+    if [[ $session_exists != 0 ]]; then
+        create_session
+    else
+        attach_to_session
+    fi
+}
+
+create_or_attach_bash_session

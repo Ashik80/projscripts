@@ -1,0 +1,24 @@
+#!/usr/bin/env bash
+
+. utils
+
+create_manzil_session() {
+    create_session manzil fe
+}
+
+attach_to_session() {
+    tmux a -t manzil
+}
+
+create_or_attach_manzil_session() {
+    local session_exists=$(if_session_exists manzil)
+
+    if [[ $session_exists != 0 ]]; then
+        create_manzil_session
+        attach_to_session
+    else
+        attach_to_session
+    fi
+}
+
+create_or_attach_manzil_session

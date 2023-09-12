@@ -1,0 +1,17 @@
+#!/usr/bin/env bash
+
+# param 1 : 'session-name'
+# Ex: manzil, platform
+# param 2 : 'repo suffix'
+# Ex: fe, be
+create_session() {
+    tmux new -d -s $1 -c $HOME/src/ManzilApp/$1-$2
+    tmux rename-window -t $1:0 $2
+}
+
+# param 1 : 'session-name'
+# Ex: manzil, platform
+if_session_exists() {
+    tmux has-session -t $1 2>/dev/null
+    echo $?
+}
