@@ -19,6 +19,7 @@ create_or_attach_bash_session() {
 
     if [[ $session_exists != 0 ]]; then
         create_session
+        attach_to_session
     else
         attach_to_session
     fi
