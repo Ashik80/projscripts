@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+
+cd $(rg --files ~ | fzf | sed 's/\(.*\)\/.*/\1/')
