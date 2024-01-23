@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+
+selected_path=$(find ~/src ~/Documents ~/projscripts ~/postgresql -type d \( -name node_modules -o -name .git -o -name __pycache__ \) -prune -o -type d -print | fzf)
+selected_dir=$(basename $selected_path)
+
+tmux has-session -t $selected_dir 2>/dev/null
+
+if [[ $? == 1 ]]; then
+    tmux new -ds $selected_dir -c $selected_path
+fi
+
+tmux switch-client -t $selected_dir
