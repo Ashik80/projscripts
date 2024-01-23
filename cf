@@ -1,3 +1,3 @@
 #!/usr/bin/env bash
 
-cd $(rg --files ~ | fzf | sed 's/\(.*\)\/.*/\1/')
+cd $(find ~/src ~/Documents ~/projscripts ~/postgresql -type d \( -name node_modules -o -name .git -o -name __pycache__ \) -prune -o -type d -print | fzf)
