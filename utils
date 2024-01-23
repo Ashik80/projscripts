@@ -15,3 +15,8 @@ if_session_exists() {
     tmux has-session -t $1 2>/dev/null
     echo $?
 }
+
+function find_relevant_directories() {
+    directories=$(find ~/src ~/Documents ~/projscripts ~/postgresql ~/tmux_config -type d \( -name node_modules -o -name .git -o -name __pycache__ \) -prune -o -type d -print | fzf)
+    echo $directories
+}

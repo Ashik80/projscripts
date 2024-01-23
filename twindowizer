@@ -1,6 +1,8 @@
 #!/usr/bin/env bash
 
-selected_path=$(find ~/src ~/Documents ~/projscripts ~/postgresql -type d \( -name node_modules -o -name .git -o -name __pycache__ \) -prune -o -type d -print | fzf)
+. utils
+
+selected_path=$(find_relevant_directories)
 selected_dir=$(basename $selected_path)
 current_session=$(tmux display-message -p '#S')
 target_window="$current_session:$selected_dir"

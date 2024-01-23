@@ -1,3 +1,5 @@
 #!/usr/bin/env bash
 
-cd $(find ~/src ~/Documents ~/projscripts ~/postgresql -type d \( -name node_modules -o -name .git -o -name __pycache__ \) -prune -o -type d -print | fzf)
+. utils
+
+cd $(find_relevant_directories)
