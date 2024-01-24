@@ -1,24 +1,22 @@
 #!/usr/bin/env bash
 
-. utils
-
-create_manzil_session() {
-    create_session manzil fe
-}
-
-attach_to_session() {
-    tmux a -t manzil
-}
-
-create_or_attach_manzil_session() {
-    local session_exists=$(if_session_exists manzil)
-
-    if [[ $session_exists != 0 ]]; then
-        create_manzil_session
-        attach_to_session
+function switch_to_window() {
+    if [[ -z $TMUX ]]; then
+        tmux a -t manzil:fe
     else
-        attach_to_session
+        tmux switch-client -t manzil:fe
     fi
 }
 
-create_or_attach_manzil_session
+tmux has-session -t manzil 2>/dev/null
+
+if [[ $? == 1 ]]; then
+    tmux new -ds manzil -c $HOME/src/ManzilApp/manzil-fe
+    tmux rename-window -t manzil:0 fe
+fi
+
+switch_to_window 2>/dev/null
+
+if [[ $? == 1 ]]; then
+    tmux new-window -t manzil -n fe -c $HOME/src/ManzilApp/manzil-fe
+fi
