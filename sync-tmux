@@ -1,0 +1,26 @@
+#!/usr/bin/env bash
+
+if [[ ! -d $HOME/make-builds/tmux ]]; then
+    git clone https://github.com/tmux/tmux.git ~/make-builds/tmux
+fi
+
+# dependencies to install: libevent-devel, bison
+if [[ $(uname -n) == "fedora" ]]; then
+    echo "Installing dependencies for $(uname -n)..."
+    sudo dnf install autoconf autoconf pkg-config libevent-devel bison
+fi
+
+cd $HOME/make-builds/tmux
+
+echo "Generating configuration file..."
+if [[ ! -f ./configure ]]; then
+    sh autogen.sh
+fi
+
+echo "Configuring..."
+./configure
+
+echo "Cleaning..."
+sudo make clean
+
+make
