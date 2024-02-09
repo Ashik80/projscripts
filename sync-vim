@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+. /etc/os-release
+
 if [[ ! -d $HOME/make-builds/vim ]]; then
     git clone https://github.com/vim/vim.git ~/make-builds/vim
 fi
