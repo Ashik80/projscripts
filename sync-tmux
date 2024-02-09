@@ -18,10 +18,10 @@ if [[ ! -f ./configure ]]; then
     sh autogen.sh
 fi
 
-echo "Configuring..."
-./configure
-
 echo "Cleaning..."
 sudo make clean
 
-make
+echo "Configuring..."
+./configure
+
+sudo make install
