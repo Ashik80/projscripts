@@ -1,11 +1,12 @@
 #!/usr/bin/env bash
 
+. /etc/os-release
+
 if [[ ! -d $HOME/make-builds/tmux ]]; then
     git clone https://github.com/tmux/tmux.git ~/make-builds/tmux
 fi
 
-# dependencies to install: libevent-devel, bison
-if [[ $(uname -n) == "fedora" ]]; then
+if [[ $ID == "fedora" ]] || [[ $ID == "nobara" ]]; then
     echo "Installing dependencies for $(uname -n)..."
     sudo dnf install autoconf autoconf pkg-config libevent-devel bison
 fi
