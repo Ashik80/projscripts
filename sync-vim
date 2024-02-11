@@ -25,6 +25,7 @@ echo "Configuring..."
     --with-python3-config-dir=/usr/lib64/python3.11/config-3.11-x86_64-linux-gnu/ \
     --enable-luainterp \
     --with-luajit \
-    --with-x
+    --with-x \
+    --disable-gui
 
 sudo make install
