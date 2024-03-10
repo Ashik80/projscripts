@@ -9,7 +9,7 @@ fi
 if [[ $ID == "fedora" ]] || [[ $ID == "nobara" ]]; then
     echo "Installing dependencies for $ID..."
     sudo dnf install libXt-devel python3-devel
-elif [[ i$ID == "ubuntu" ]]
+elif [[ $ID == "ubuntu" ]]
     echo "Installing dependencies for $ID..."
     sudo apt install python3-dev
 fi
@@ -21,12 +21,21 @@ make distclean
 make clean
 
 echo "Configuring..."
-./configure \
-    --with-features=huge \
-    --enable-python3interp \
-    --with-python3-command=/usr/bin/python3 \
-    --with-python3-config-dir=/usr/lib64/python3.11/config-3.11-x86_64-linux-gnu/ \
-    --with-x \
-    --disable-gui
+if [[ $ID == "fedora" ]] || [[ $ID == "nobara" ]]; then
+    ./configure \
+        --with-features=huge \
+        --enable-python3interp \
+        --with-python3-command=/usr/bin/python3 \
+        --with-python3-config-dir=/usr/lib64/python3.11/config-3.11-x86_64-linux-gnu/ \
+        --with-x \
+        --disable-gui
+elif [[ $ID == "ubuntu" ]]
+    ./configure \
+        --with-features=huge \
+        --enable-python3interp \
+        --with-python3-command=/usr/bin/python3 \
+        --with-x \
+        --disable-gui
+fi
 
 sudo make install
