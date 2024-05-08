@@ -1,0 +1,26 @@
+#!/usr/bin/env bash
+
+function sync_dir() {
+	if [ -e $1 ]; then
+		echo 0
+	else
+		echo 1
+	fi
+}
+
+dirs_to_update=(~/Documents ~/tmux_config ~/.vim ~/.config/nvim)
+
+for dir in ${dirs_to_update[@]}; do
+	sync_dir $dir
+	if [[ $? == 0 ]]; then
+		cd $dir
+		echo "Syncing $dir"
+		git pull
+	else
+		echo "WARNING: $dir is not present! Please clone the repo"
+	fi
+done
+
+# sync passwords
+echo "Syncing passwords"
+pass git pull
