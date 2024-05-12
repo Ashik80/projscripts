@@ -2,14 +2,14 @@
 
 . /etc/os-release
 
-if [[ ! -d $HOME/make-builds/vim ]]; then
+if [[ ! -e $HOME/make-builds/vim ]]; then
     git clone https://github.com/vim/vim.git ~/make-builds/vim
 fi
 
 if [[ $ID == "fedora" ]] || [[ $ID == "nobara" ]]; then
     echo "Installing dependencies for $ID..."
     sudo dnf install libXt-devel python3-devel
-elif [[ $ID == "ubuntu" ]]
+elif [[ $ID == "ubuntu" ]] || [[ $ID == "linuxmint" ]]; then
     echo "Installing dependencies for $ID..."
     sudo apt install python3-dev
 fi
@@ -29,7 +29,7 @@ if [[ $ID == "fedora" ]] || [[ $ID == "nobara" ]]; then
         --with-python3-config-dir=/usr/lib64/python3.11/config-3.11-x86_64-linux-gnu/ \
         --with-x \
         --disable-gui
-elif [[ $ID == "ubuntu" ]]
+elif [[ $ID == "ubuntu" ]] || [[ $ID == "linuxmint" ]]; then
     ./configure \
         --with-features=huge \
         --enable-python3interp \
