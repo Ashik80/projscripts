@@ -10,13 +10,13 @@ cd ~/make-builds
 
 if [[ ! -e ~/make-builds/vim-$version ]]; then
     echo "Downloading vim version $version"
-    curl -o vim-$version https://codeload.github.com/vim/vim/tar.gz/refs/tags/v$version
+    curl -o vim-$version.tar.gz https://codeload.github.com/vim/vim/tar.gz/refs/tags/v$version
 
     echo "Unpacking vim-$version"
-    tar xvf vim-$version
+    tar xvf vim-$version.tar.gz
 
     echo "Removing tarball"
-    rm vim-$version
+    rm vim-$version.tar.gz
 fi
 
 sudo apt install libxt-dev libncurses-dev

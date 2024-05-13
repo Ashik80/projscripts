@@ -10,13 +10,13 @@ cd ~/make-builds
 
 if [[ ! -e ~/make-builds/neovim-$version ]]; then
     echo "Downloading neovim version $version"
-    curl -o neovim-$version https://codeload.github.com/neovim/neovim/tar.gz/refs/tags/v$version
+    curl -o neovim-$version.tar.gz https://codeload.github.com/neovim/neovim/tar.gz/refs/tags/v$version
 
     echo "Unpacking neovim-$version"
-    tar xvf neovim-$version
+    tar xvf neovim-$version.tar.gz
 
     echo "Removing tarball"
-    rm neovim-$version
+    rm neovim-$version.tar.gz
 fi
 
 sudo apt-get install ninja-build gettext cmake unzip curl build-essential
