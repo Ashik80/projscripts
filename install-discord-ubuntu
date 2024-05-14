@@ -10,6 +10,10 @@ if [ -e /usr/share/applications/discord.desktop ]; then
     sudo rm /usr/share/applications/discord.desktop
 fi
 
+if [ -e /opt/Discord ]; then
+    sudo rm -r /opt/Discord
+fi
+
 if [ -e $HOME/make-builds/Discord ]; then
     rm -r $HOME/make-builds/Discord
 fi
