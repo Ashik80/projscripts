@@ -7,7 +7,7 @@ selected_dir=$(basename $selected_path)
 
 tmux has-session -t $selected_dir 2>/dev/null
 
-if [[ $? == 1 ]]; then
+if [[ $? == 1 ]] && [ ! -z $selected_path ]; then
     tmux new -ds $selected_dir -c $selected_path
 fi
 
