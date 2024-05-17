@@ -6,6 +6,7 @@ for dir in ${dirs_to_update[@]}; do
 	if [ -e $dir ]; then
 		cd $dir
 		echo "Syncing $dir"
+		git status -s
 		git pull
 	else
 		echo "WARNING: $dir is not present! Please clone the repo"
