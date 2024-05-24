@@ -1,5 +1,0 @@
-#!/usr/bin/env bash
-
-. utils
-
-cd $(find_relevant_directories)

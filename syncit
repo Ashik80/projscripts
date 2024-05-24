@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-dirs_to_update=(~/Documents ~/tmux_config ~/.vim ~/.config/nvim ~/projscripts)
+dirs_to_update=(~/Documents ~/tmux_config ~/.vim ~/.config/nvim ~/projscripts ~/.config/alacritty)
 
 for dir in ${dirs_to_update[@]}; do
 	if [ -e $dir ]; then
