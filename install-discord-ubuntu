@@ -27,6 +27,6 @@ cd $HOME/make-builds/
 
 sudo tar xvf discord-$current_version.tar.gz -C /opt
 
-sudo ln -s /opt/Discord/Discord /usr/bin/Discord
+sudo ln -s /opt/Discord/Discord /usr/local/bin/discord
 
 sudo cp /opt/Discord/discord.desktop /usr/share/applications/
